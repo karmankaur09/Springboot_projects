@@ -2,18 +2,47 @@ package com.example.BookLibrary.controllers;
 
 import com.example.BookLibrary.model.Book;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/books")
 public class BookController {
-    private List<Book> books = new ArrayList<>(); //arraylist for saving the book in place of database
+    private List<Book> booksList = new ArrayList<>(); //arraylist for saving the book in place of database
 
     public BookController(){ //default constructor
-        books.add(new Book(1,"Angel","Stephen"));
-        books.add(new Book(2,"sweet 16","Malika"));
-        books.add(new Book(3,"Atomic habits","Japenese"));
-        books.add(new Book(4,"How to think","Nargois"));
+        booksList.add(new Book(1L,"Angel","Stephen"));
+        booksList.add(new Book(2L,"sweet 16","Malika"));
+        booksList.add(new Book(3L,"Atomic habits","Japenese"));
+        booksList.add(new Book(4L,"How to think","Nargois"));
     }
+    @GetMapping
+    public List<Book> getAllBook(){
+        return booksList;
+    }
+
+    @GetMapping("/{id}") //http://localhost:8080/books/4
+    public Book getBookById(@PathVariable Long id){
+        for (Book book : booksList){
+            if (book.getId().equals(id)){
+                return book;
+            }
+        }
+        return null;
+    }
+//    {
+//        "name":"think big",
+//            "authorName":"Nepolean"
+//    }
+    @PostMapping
+    public Book createBook(@RequestBody Book clientBook){   //clienBook-outside var
+        Long sizeOfBookList = Long.valueOf(booksList.size());  //size of current booklist = 4
+        clientBook.setId((Long)(sizeOfBookList+1));           //where increase size to 5 and setting it to clientbook
+        booksList.add(clientBook);               //saving clientbook in databse ie booklist
+        return clientBook;   //return the clienbook with id for user confirmation
+    }
+
+
 }

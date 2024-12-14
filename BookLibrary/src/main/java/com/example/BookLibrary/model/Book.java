@@ -1,6 +1,6 @@
 package com.example.BookLibrary.model;
 public class Book {
-    private int id;
+    private Long id;
     private String name;
     private String authorName;
 
@@ -8,17 +8,17 @@ public class Book {
        //default cons
     }
 
-    public Book(int outId, String outName, String outAuthorName){
+    public Book(Long outId, String outName, String outAuthorName){
         this.id = outId;
         this.name = outName;
         this.authorName = outAuthorName;
     }
 
-    public int getId(){
+    public Long getId(){
         return id;
     }
 
-    public void setId(int outId){
+    public void setId(Long outId){
         this.id = outId;
     }
 
