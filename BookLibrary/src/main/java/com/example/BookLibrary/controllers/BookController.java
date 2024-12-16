@@ -18,7 +18,7 @@ public class BookController {
         booksList.add(new Book(3L,"Atomic habits","Japenese"));
         booksList.add(new Book(4L,"How to think","Nargois"));
     }
-    @GetMapping
+    @GetMapping      //request URL = http://localhost:8080/books
     public List<Book> getAllBook(){
         return booksList;
     }
@@ -42,6 +42,33 @@ public class BookController {
         clientBook.setId((Long)(sizeOfBookList+1));           //where increase size to 5 and setting it to clientbook
         booksList.add(clientBook);               //saving clientbook in databse ie booklist
         return clientBook;   //return the clienbook with id for user confirmation
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBook(@PathVariable Long id){
+        for (Book book : booksList) {
+            if (book.getId().equals(id)) {
+                booksList.remove(book);
+                break;
+            }
+        }
+    }
+
+    @PutMapping("/{id}")
+    public Book updateBook(@PathVariable Long id, @RequestBody Book clientBook){
+        Book currentBook = null;
+        for(Book book : booksList){
+            if(book.getId().equals(id)){
+                currentBook = book;
+                break;
+            }
+        }
+        if (currentBook != null){
+            currentBook.setName(clientBook.getname());
+            currentBook.setAuthorName(clientBook.getAuthorName());
+            return currentBook;
+        }
+        return  null;
     }
 
 
