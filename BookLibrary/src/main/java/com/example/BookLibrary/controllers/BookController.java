@@ -1,6 +1,8 @@
 package com.example.BookLibrary.controllers;
 
 import com.example.BookLibrary.model.Book;
+import com.example.BookLibrary.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,20 +20,29 @@ public class BookController {
         booksList.add(new Book(3L,"Atomic habits","Japenese"));
         booksList.add(new Book(4L,"How to think","Nargois"));
     }
-    @GetMapping      //request URL = http://localhost:8080/books
+    @Autowired
+    private BookService Obj;
+   // @GetMapping      //request URL = http://localhost:8080/books
+//    public List<Book> getAllBook(){
+//        return booksList;
+//    }
+    @GetMapping
     public List<Book> getAllBook(){
-        return booksList;
+        return Obj.getAllBook();
     }
-
     @GetMapping("/{id}") //http://localhost:8080/books/4
     public Book getBookById(@PathVariable Long id){
-        for (Book book : booksList){
-            if (book.getId().equals(id)){
-                return book;
-            }
-        }
-        return null;
+        return Obj.getBookById(id);
     }
+//    @GetMapping("/{id}") //http://localhost:8080/books/4
+//    public Book getBookById(@PathVariable Long id){
+//        for (Book book : booksList){
+//            if (book.getId().equals(id)){
+//                return book;
+//            }
+//        }
+//        return null;
+//    }
 //    {
 //        "name":"think big",
 //            "authorName":"Nepolean"
