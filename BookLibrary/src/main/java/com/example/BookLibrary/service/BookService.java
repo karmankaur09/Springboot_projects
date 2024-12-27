@@ -12,10 +12,6 @@ import java.util.List;
 public class BookService {
     @Autowired
     private BookRepository ObjRepo;
-    // Constructor-based Dependency Injection
-//    public BookService(BookRepository Obj){
-//        this.Obj = Obj;
-//    }
     public List<Book> getAllBook() {
         return ObjRepo.findAll();
     }
@@ -29,12 +25,6 @@ public class BookService {
         }
         return null; // Return null if not found
     }
-    //public Book createBook(@RequestBody Book clientBook){   //clienBook-outside var
-//        Long sizeOfBookList = Long.valueOf(booksList.size());  //size of current booklist = 4
-//        clientBook.setId((Long)(sizeOfBookList+1));           //where increase size to 5 and setting it to clientbook
-//        booksList.add(clientBook);               //saving clientbook in databse ie booklist
-//        return clientBook;   //return the clienbook with id for user confirmation
-//    }
     public Book createBook(Book clientBook){
         return ObjRepo.save(clientBook);
     }
